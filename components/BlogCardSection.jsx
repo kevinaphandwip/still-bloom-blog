@@ -24,7 +24,7 @@ export default function BlogCardSection({posts}) {
     key={post.id}
     id={post.slug}
     title={post.title}
-    excerpt={post.excerpt.replace(/<[^>]+>/g, '')} // hilangkan tag HTML
+    excerpt={post.excerpt.replace(/<[^>]+>/g, '')} 
     category={post.categories?.nodes?.[0]?.name || 'Uncategorized'}
     imageSrc={post.featuredImage?.node?.sourceUrl || '/placeholder.jpg'}
   />

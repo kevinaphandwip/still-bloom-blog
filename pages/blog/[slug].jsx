@@ -1,4 +1,7 @@
 import { getPostBySlug } from '@/lib/getPosts';
+import { getRecentPosts } from '@/lib/getPosts';
+
+
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
 import Image from 'next/image';
@@ -8,15 +11,17 @@ import Head from 'next/head';
 
 export async function getServerSideProps({ params }) {
   const post = await getPostBySlug(params.slug);
+  const recentPosts = await getRecentPosts(5);
 
   return {
     props: {
       post,
+      recentPosts,
     },
   };
 }
 
-export default function BlogDetail({ post }) {
+export default function BlogDetail({ post , recentPosts}) {
   if (!post) return <p className="text-center py-10">Loading...</p>;
 
   const category = post.categories?.nodes?.[0]?.name || 'Uncategorized';
@@ -76,8 +81,8 @@ export default function BlogDetail({ post }) {
         </article>
 
         <div className="lg:flex-[1]">
-          <Sidebar posts={[post]} />
-        </div>
+        <Sidebar posts={recentPosts} />
+      </div>
       </main>
 
       <GallerySection />
